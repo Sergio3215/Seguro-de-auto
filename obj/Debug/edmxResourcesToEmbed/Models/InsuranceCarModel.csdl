@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InsuranceCarsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CoverageInsurance">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DetailPolicy" Relationship="Self.FK__DetailPol__id_ca__267ABA7A" FromRole="CoverageInsurance" ToRole="DetailPolicy" />
+  </EntityType>
+  <EntityType Name="DetailPolicy">
+    <Key>
+      <PropertyRef Name="id_catalog" />
+    </Key>
+    <Property Name="id_catalog" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="insured_amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="CoverageInsurance" Relationship="Self.FK__DetailPol__id_ca__267ABA7A" FromRole="DetailPolicy" ToRole="CoverageInsurance" />
+  </EntityType>
+  <Association Name="FK__DetailPol__id_ca__267ABA7A">
+    <End Role="CoverageInsurance" Type="Self.CoverageInsurance" Multiplicity="1" />
+    <End Role="DetailPolicy" Type="Self.DetailPolicy" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CoverageInsurance">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetailPolicy">
+        <PropertyRef Name="id_catalog" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InsuranceCarsDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CoverageInsurances" EntityType="Self.CoverageInsurance" />
+    <EntitySet Name="DetailPolicies" EntityType="Self.DetailPolicy" />
+    <AssociationSet Name="FK__DetailPol__id_ca__267ABA7A" Association="Self.FK__DetailPol__id_ca__267ABA7A">
+      <End Role="CoverageInsurance" EntitySet="CoverageInsurances" />
+      <End Role="DetailPolicy" EntitySet="DetailPolicies" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InsuranceCarsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CoverageInsurance">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetailPolicy">
+    <Key>
+      <PropertyRef Name="id_catalog" />
+    </Key>
+    <Property Name="id_catalog" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar(max)" Nullable="false" />
+    <Property Name="insured_amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__DetailPol__id_ca__267ABA7A">
+    <End Role="CoverageInsurance" Type="Self.CoverageInsurance" Multiplicity="1" />
+    <End Role="DetailPolicy" Type="Self.DetailPolicy" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CoverageInsurance">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DetailPolicy">
+        <PropertyRef Name="id_catalog" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InsuranceCarsDBModelStoreContainer">
+    <EntitySet Name="CoverageInsurance" EntityType="Self.CoverageInsurance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailPolicy" EntityType="Self.DetailPolicy" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DetailPol__id_ca__267ABA7A" Association="Self.FK__DetailPol__id_ca__267ABA7A">
+      <End Role="CoverageInsurance" EntitySet="CoverageInsurance" />
+      <End Role="DetailPolicy" EntitySet="DetailPolicy" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
