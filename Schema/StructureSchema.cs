@@ -14,8 +14,8 @@ namespace InsuranceCar_WebAPI.Schema
     }
     public partial class PolicyList
     {
-        [Key]
         public int id_catalog { get; set; }
+        [Key]
         public int id { get; set; }
         public string name { get; set; }
         public string name_catalog { get; set; }

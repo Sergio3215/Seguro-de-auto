@@ -188,6 +188,22 @@
     <Compile Include="Migrations\202208291044046_add id.designer.cs">
       <DependentUpon>202208291044046_add id.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208291204349_change key.cs" />
+    <Compile Include="Migrations\202208291204349_change key.designer.cs">
+      <DependentUpon>202208291204349_change key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208291207424_change keyx2.cs" />
+    <Compile Include="Migrations\202208291207424_change keyx2.designer.cs">
+      <DependentUpon>202208291207424_change keyx2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208291216228_change key again x2.cs" />
+    <Compile Include="Migrations\202208291216228_change key again x2.designer.cs">
+      <DependentUpon>202208291216228_change key again x2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208291222126_i wanna quit the key.cs" />
+    <Compile Include="Migrations\202208291222126_i wanna quit the key.designer.cs">
+      <DependentUpon>202208291222126_i wanna quit the key.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\StructureSchema.cs" />
@@ -201,6 +217,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB File\InsuranceCarsDB.mdf" />
+    <Content Include="DB File\InsuranceCarsDB_log.ldf">
+      <DependentUpon>InsuranceCarsDB.mdf</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1042,7 +1062,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DB File\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -1089,6 +1108,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208291044046_add id.resx">
       <DependentUpon>202208291044046_add id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208291204349_change key.resx">
+      <DependentUpon>202208291204349_change key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208291207424_change keyx2.resx">
+      <DependentUpon>202208291207424_change keyx2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208291216228_change key again x2.resx">
+      <DependentUpon>202208291216228_change key again x2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208291222126_i wanna quit the key.resx">
+      <DependentUpon>202208291222126_i wanna quit the key.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

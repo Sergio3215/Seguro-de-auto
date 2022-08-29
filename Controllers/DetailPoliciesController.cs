@@ -98,7 +98,7 @@ namespace InsuranceCar_WebAPI.Controllers
             detailPolicy.name = name;
             detailPolicy.insured_amount = amount;
             detailPolicy.name_catalog = coverageInsurance.name;
-            detailPolicy.id = idNum;
+            //detailPolicy.id = idNum;
             context.PolicyLists.Add(detailPolicy);
             context.SaveChanges();
             return GetDetailPolicy();

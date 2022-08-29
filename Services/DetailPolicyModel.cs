@@ -16,6 +16,7 @@ namespace InsuranceCar_WebApi.Services
             this.Property(cat => cat.name_catalog).IsRequired();
             this.Property(cat => cat.insured_amount).IsRequired();
             this.Property(cat => cat.id_catalog).IsRequired();
+            this.Property(cat => cat.id).IsRequired();
             this.ToTable("DetailPolicy");
         }
     }

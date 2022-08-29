@@ -92,3 +92,7 @@ C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\Microsof
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.CopyComplete
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.dll
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.pdb
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.changekey.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.changekeyx2.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.changekeyagainx2.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.iwannaquitthekey.resources
