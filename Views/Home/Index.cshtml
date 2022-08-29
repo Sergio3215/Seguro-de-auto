@@ -97,10 +97,10 @@
                                     {{detail.insured_amount}}
                                 </div>
                                 <div>
-                                    <button value={{detail.id_catalog}} ng-click="$ctrl.clickEdit($event)">Editar</button>
+                                    <button value={{detail.id}} ng-click="$ctrl.clickEdit($event)">Editar</button>
                                 </div>
                                 <div>
-                                    <button value={{detail.id_catalog}} ng-click="$ctrl.deleteDetail($event)">Borrar</button>
+                                    <button value={{detail.id}} ng-click="$ctrl.deleteDetail($event)">Borrar</button>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                 }
                 this.editKey = false;
                 this.clickEdit = async function clickEdit(e) {
-
+                    
                     this.editKey = !this.editKey;
 
                     if (this.editKey) {
@@ -162,41 +162,46 @@
                     let optionSelect = ``;
 
                     //Category
-                    data.map(dt => {
-                        if (detailData[0].name_catalog == name) {
-                            optionSelect += `
+                        data.map(dt => {
+                            try {
+                                if (detailData[0].name_catalog == dt.name) {
+                                    optionSelect += `
                     <option value=${dt.id} selected="selected" >${dt.name}</option>
                         `
-                        }
-                        else {
-                            optionSelect += `
+                                }
+                                else {
+                                    optionSelect += `
                     <option value=${dt.id}>${dt.name}</option>
                         `
-                        }
+                                }
+                            }
+                            catch (e) {
+                                optionSelect += `
+                    <option value=${dt.id}>${dt.name}</option>
+                        `
+                            }
                     })
 
                         let componentDetail = ``;
                     //data for edit
-                    detailData.map(dd => {
                         componentDetail = `
                             <div>
                                 <label>Nombre</label>
-                                <input type="text" value=${dd.name} id="nameEdit"/>
+                                <input type="text" value=${detailData.name} id="nameEdit"/>
                             </div>
                             <div>
-                               <select >
+                               <select id="idCategory" value=${detailData.id_catalog}>
                                      ${optionSelect}
                                  </select>
                             </div>
                             <div>
                                 <label>Monto Asegurado</label>
-                                <input type="number" value=${parseInt(dd.insured_amount)} id="amountEdit"/>
+                                <input type="number" value=${parseInt(detailData.insured_amount)} id="amountEdit"/>
                             </div>
                             <div>
-                               <button id="clickEdit" value=${dd.id_catalog} >Editar</button>
+                               <button id="clickEdit" value=${detailData.id} >Editar</button>
                             </div>
                         `;
-                    })
 
                         document.querySelector("#editComponent").innerHTML = `
                         <div>
@@ -216,10 +221,12 @@
         });
 
     const detailEdit = async (e) => {
-        let _id_category = e.target.value;
+        let _id = e.target.value;
+        debugger
+        let _id_category = document.querySelector("#idCategory").value;
         let _name = document.querySelector("#nameEdit").value;
         let _amount = parseInt(document.querySelector("#amountEdit").value);
-        let ftc1 = await fetch("https://localhost:44342/api/DetailPolicies?id=" + parseInt(_id_category) + "&name=" + _name + "&amount=" + _amount + "&id_category=" + parseInt(_id_category), {
+        let ftc1 = await fetch("https://localhost:44342/api/DetailPolicies?id=" + parseInt(_id) + "&name=" + _name + "&amount=" + _amount + "&id_category=" + parseInt(_id_category), {
             method: 'put'
         })
         location.reload(true)

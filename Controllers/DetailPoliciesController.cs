@@ -35,18 +35,20 @@ namespace InsuranceCar_WebAPI.Controllers
         }
 
         // GET: api/CoverageInsurances?IdValue=5
-        public PolicyList GetDetailPolicyByID(int id_catalog)
+        public PolicyList GetDetailPolicyByID(int id)
         {
-            return db.GetDetail().Where(dt => dt.id_catalog == id_catalog).FirstOrDefault();
+            return db.GetDetail().Where(dt => dt.id == id).FirstOrDefault();
         }
 
         // PUT: api/DetailPolicies/5
         public IHttpActionResult PutPolicyList(int? id, string name, int amount, int id_category)
         {
-            PolicyList policyList = db.GetDetail().Where(dt => dt.id_catalog == id_category).FirstOrDefault();
+            CatalogList coverageInsurance = catalog.GetCatalog().Where(ci => ci.id == id_category).FirstOrDefault();
+            PolicyList policyList = db.GetDetail().Where(dt => dt.id == id ).FirstOrDefault();
             policyList.name = name;
             policyList.insured_amount = amount;
             policyList.id_catalog = id_category;
+            policyList.name_catalog = coverageInsurance.name;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -78,11 +80,25 @@ namespace InsuranceCar_WebAPI.Controllers
         {
             CatalogList coverageInsurance = catalog.GetCatalog().Where(ci => ci.id == id_catalog).FirstOrDefault();
 
+            int idNum = 1;
+
+            List<PolicyList> list = GetDetailPolicy();
+
+            for (int ii=0; ii<list.Count(); ii++)
+            {
+                if (idNum >= list[ii].id)
+                {
+                    idNum = list[ii].id;
+                    idNum++;
+                }
+            }
+
             PolicyList detailPolicy = new PolicyList();
             detailPolicy.id_catalog = (int)id_catalog;
             detailPolicy.name = name;
             detailPolicy.insured_amount = amount;
             detailPolicy.name_catalog = coverageInsurance.name;
+            detailPolicy.id = idNum;
             context.PolicyLists.Add(detailPolicy);
             context.SaveChanges();
             return GetDetailPolicy();
@@ -91,7 +107,7 @@ namespace InsuranceCar_WebAPI.Controllers
         // DELETE: api/DetailPolicies/5
         public IHttpActionResult DeleteDetailPolicy(int id)
         {
-            PolicyList detailPolicy = context.PolicyLists.Where(dt => dt.id_catalog == id).FirstOrDefault();
+            PolicyList detailPolicy = context.PolicyLists.Where(dt => dt.id == id).FirstOrDefault();
             if (detailPolicy == null)
             {
                 return NotFound();

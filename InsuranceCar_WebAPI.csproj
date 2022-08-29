@@ -184,6 +184,10 @@
     <Compile Include="Migrations\202208290338040_initial1.designer.cs">
       <DependentUpon>202208290338040_initial1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208291044046_add id.cs" />
+    <Compile Include="Migrations\202208291044046_add id.designer.cs">
+      <DependentUpon>202208291044046_add id.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\StructureSchema.cs" />
@@ -1081,6 +1085,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208290338040_initial1.resx">
       <DependentUpon>202208290338040_initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208291044046_add id.resx">
+      <DependentUpon>202208291044046_add id.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

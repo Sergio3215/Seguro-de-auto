@@ -1,3 +1,10 @@
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.AssemblyReference.cache
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.init.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.initial.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.initial1.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.addid.resources
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.GenerateResource.cache
+C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.CoreCompileInputs.cache
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\InsuranceCar_WebAPI.dll.config
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\InsuranceCar_WebAPI.dll
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\InsuranceCar_WebAPI.pdb
@@ -82,12 +89,6 @@ C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\System.W
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\System.Web.WebPages.Razor.xml
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\Antlr3.Runtime.pdb
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.AssemblyReference.cache
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.init.resources
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.initial.resources
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.Migrations.initial1.resources
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.GenerateResource.cache
-C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.CoreCompileInputs.cache
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.csproj.CopyComplete
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.dll
 C:\Users\fox_3\source\repos\InsuranceCar_WebAPI\InsuranceCar_WebAPI\obj\Debug\InsuranceCar_WebAPI.pdb
