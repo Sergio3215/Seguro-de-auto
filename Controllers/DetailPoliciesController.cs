@@ -1,4 +1,8 @@
-﻿using System;
+﻿using InsuranceCar_WebApi.Controllers.Catalog_Coverage;
+using InsuranceCar_WebApi.Services;
+using InsuranceCar_WebAPI.Schema;
+using InsuranceCars_WebApi.Controllers.DetailPolicy;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,56 +12,51 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using InsuranceCar_WebAPI.Models;
 
 namespace InsuranceCar_WebAPI.Controllers
 {
     public class DetailPoliciesController : ApiController
     {
-        private InsuranceCarsDBEntities db = new InsuranceCarsDBEntities();
+        private DetailPolicyService db;
+        private GlobalContext context;
+        private CatalogService catalog;
 
-        // GET: api/DetailPolicies
-        public IQueryable<DetailPolicy> GetDetailPolicies()
+        public DetailPoliciesController()
         {
-            return db.DetailPolicies;
+            db = new DetailPolicyService();
+            context = new GlobalContext();
+            catalog = new CatalogService();
         }
 
-        // GET: api/DetailPolicies/5
-        [ResponseType(typeof(DetailPolicy))]
-        public IHttpActionResult GetDetailPolicy(int id)
+        // GET: api/CoverageInsurances
+        public List<PolicyList> GetDetailPolicy()
         {
-            DetailPolicy detailPolicy = db.DetailPolicies.Find(id);
-            if (detailPolicy == null)
-            {
-                return NotFound();
-            }
+            return db.GetDetail();
+        }
 
-            return Ok(detailPolicy);
+        // GET: api/CoverageInsurances?IdValue=5
+        public PolicyList GetDetailPolicyByID(int id_catalog)
+        {
+            return db.GetDetail().Where(dt => dt.id_catalog == id_catalog).FirstOrDefault();
         }
 
         // PUT: api/DetailPolicies/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutDetailPolicy(int id, DetailPolicy detailPolicy)
+        public IHttpActionResult PutPolicyList(int id, PolicyList policyList)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != detailPolicy.id_catalog)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(detailPolicy).State = EntityState.Modified;
+            context.Entry(policyList).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DetailPolicyExists(id))
+                if (!PolicyListExists(id))
                 {
                     return NotFound();
                 }
@@ -70,48 +69,32 @@ namespace InsuranceCar_WebAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DetailPolicies
-        [ResponseType(typeof(DetailPolicy))]
-        public IHttpActionResult PostDetailPolicy(DetailPolicy detailPolicy)
+        // POST: api/DetailPolicies?id=5
+        public List<PolicyList> PostDetailPolicy(int? id_catalog, string name, decimal amount)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            CatalogList coverageInsurance = catalog.GetCatalog().Where(ci => ci.id == id_catalog).FirstOrDefault();
 
-            db.DetailPolicies.Add(detailPolicy);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (DetailPolicyExists(detailPolicy.id_catalog))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = detailPolicy.id_catalog }, detailPolicy);
+            PolicyList detailPolicy = new PolicyList();
+            detailPolicy.id_catalog = (int)id_catalog;
+            detailPolicy.name = name;
+            detailPolicy.insured_amount = amount;
+            detailPolicy.name_catalog = coverageInsurance.name;
+            context.PolicyLists.Add(detailPolicy);
+            context.SaveChanges();
+            return GetDetailPolicy();
         }
 
         // DELETE: api/DetailPolicies/5
-        [ResponseType(typeof(DetailPolicy))]
         public IHttpActionResult DeleteDetailPolicy(int id)
         {
-            DetailPolicy detailPolicy = db.DetailPolicies.Find(id);
+            PolicyList detailPolicy = context.PolicyLists.Where(dt=>dt.id_catalog==id).FirstOrDefault();
             if (detailPolicy == null)
             {
                 return NotFound();
             }
 
-            db.DetailPolicies.Remove(detailPolicy);
-            db.SaveChanges();
+            context.PolicyLists.Remove(detailPolicy);
+            context.SaveChanges();
 
             return Ok(detailPolicy);
         }
@@ -120,14 +103,14 @@ namespace InsuranceCar_WebAPI.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool DetailPolicyExists(int id)
+        private bool PolicyListExists(int id)
         {
-            return db.DetailPolicies.Count(e => e.id_catalog == id) > 0;
+            return context.PolicyLists.Count(e => e.id_catalog == id) > 0;
         }
     }
 }

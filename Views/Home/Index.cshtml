@@ -1,24 +1,429 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+            is an ideal platform for building RESTful applications on the .NET Framework.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
+
+@*<div ng-app>
+        <label>Nombre</label>
+        <input type="text" placeholder="Ingrese un nombre" ng-model="name" />
+        <div></div>
+        <div>{{"El nombre ingresado es "+name}}</div>
+        <label>
+            Nombres Probables
+        </label>
+        <div ng-init="nameProv=['Jhon','Matt','Steacy']">
+            <ol>
+                <li ng-repeat="nameSt in nameProv">
+                    {{nameSt}}
+                </li>
+            </ol>
+        </div>
+    </div>*@
+
+
+@* function in angular*@
+
+<div ng-app="myApp" ng-controller="myController">
+    <label> Lista de detalles de polizas</label>
+    <details-list></details-list>
+    <div>
+        <label> Lista de catalogos de seguros</label>
+        <catalog-list></catalog-list>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+@*<div ng-app="myApp" ng-controller="myController">{{message}}</div>*@
+
+<script>
+    //let details = getAllDetails();
+    let npApp = angular.module('myApp', []);
+    npApp.controller("myController", ($scope, $http) => {
+        console.log($scope.element)
+        $scope.message = "Hi man";
+        //console.log(await details)
+        //$scope.dataDetails = await details;
+        $http.get("https://localhost:44342/api/DetailPolicies")
+            .then(res => $scope.dataDetails = res.data)
+    });
+
+    angular.
+        module('myApp').
+        component('detailsList', {
+            template: `
+                <button id="btnVisible" ng-click="$ctrl.onClick($event)">{{$ctrl.bntName}}</button>
+                <div style={{$ctrl.styleText}}>
+                    <div id="items-details">
+                                <div>
+                                    <button ng-click="$ctrl.addDetailClick()">Nuevo detalle de poliza</button>
+                                </div>
+
+                                <div id="editComponent">
+                                </div>
+                                <div style={{$ctrl.showAddDetails}}>
+                                    <detailform></detailform>
+                                </div>
+                        <div id="item-title">
+                            <div><label>Nombre</label></div> <div><label>Monto de seguro</label></div>
+                        </div>
+                        <div id="items-list">
+                            <div ng-repeat="detail in $ctrl.dataDetails">
+                                <div>
+                                    {{detail.name}}
+                                </div>
+                                <div>
+                                    {{detail.name_catalog}}
+                                </div>
+                                <div>
+                                    {{detail.insured_amount}}
+                                </div>
+                                <div>
+                                    <button value={{detail.id_catalog}} ng-click="$ctrl.clickEdit($event)">Editar</button>
+                                </div>
+                                <div>
+                                    <button value={{detail.id_catalog}} ng-click="$ctrl.deleteDetail($event)">Borrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            controller: function detailsListController($http) {
+                //console.log(document.querySelector("#items-details").attributes.value.value);
+                this.key = true;
+                this.styleText = "display:none;";
+                this.bntName = "Mostrar";
+
+                this.showAddDetails = "display:none;";
+                this.showAddDetailsKey = false;
+                this.addDetailClick = function AddClick() {
+                    this.showAddDetailsKey = !this.showAddDetailsKey;
+                    this.showAddDetails = "display:none;";
+                    if (this.showAddDetailsKey) {
+                        this.showAddDetails = "display:flex;";
+                    }
+                    else {
+                        this.showAddDetails = "display:none;";
+                    }
+                }
+
+                $http.get("https://localhost:44342/api/DetailPolicies")
+                        .then(res => this.dataDetails = res.data)
+
+                this.onClick = function hideShow(evt) {
+                    this.key = !this.key;
+                    this.bntName = "Ocultar"
+                    this.styleText = "display:block;"
+                    if (this.key) {
+                        this.styleText = "display:none;"
+                        this.bntName = "Mostrar"
+                    }
+                }
+
+                this.deleteDetail = function deleteDetail(e) {
+                    console.log(e.target.value)
+                    let id = e.target.value;
+                    $http.delete("https://localhost:44342/api/DetailPolicies/" + id)
+
+                    location.reload(true);
+                }
+                this.editKey = false;
+                this.clickEdit = async function clickEdit(e) {
+
+                    let ftch = await fetch("https://localhost:44342/api/CoverageInsurances")
+                    let data = await ftch.json();
+
+                    let detailFetch = await fetch("https://localhost:44342/api/DetailPolicies/" + e.target.value);
+                    let detailData = await detailFetch.json();
+                    console.log(detailData)
+
+                    this.editKey = !this.editKey;
+
+                    let optionSelect = ``;
+
+                    data.map(dt => {
+                        if (detailData[0].name_catalog == name) {
+                            optionSelect += `
+                    <option value=${dt.id} selected="selected" >${dt.name}</option>
+                        `
+                        }
+                        else {
+                            optionSelect += `
+                    <option value=${dt.id}>${dt.name}</option>
+                        `
+                        }
+                    })
+
+                    if (this.editKey) {
+                        document.querySelector("#editComponent").innerHTML = `
+                        <div>
+                            <div>
+                                Editar detalle de poliza
+                            </div>
+                            <div>
+                                Editar detalle de poliza
+                            </div>
+                            <div>
+                               <select >
+                                     ${optionSelect}
+                                 </select>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    else {
+
+                        document.querySelector("#editComponent").innerHTML = ``;
+                    }
+                }
+
+            }
+        });
+
+    angular.
+        module('myApp').
+        component('detailform', {
+            template: `
+                <div>
+                     <div id="item-title">
+                         <div><label>Añadir nuevo detalle</label></div>
+                     </div>
+                     <div >
+                         <div>
+                             <div>
+                                 <label>Nombre de la poliza</label>
+                                 <input type="text" ng-model="$ctrl.Name" required/>
+                             </div>
+                             <div>
+                                 <label>Catalogo de Cobertura de Servicio </label>
+                                 <select ng-model="$ctrl.id_catalog">
+                                     <option ng-repeat="catalog in $ctrl.dataCatalog" value={{catalog.id}}>{{catalog.name}}</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label>Monto asegurado</label>
+                                 <input type="number" ng-model="$ctrl.Amount" required />
+                             </div>
+                             <div>
+                                 <input type="submit" ng-click="$ctrl.createDetail()" value="Guardar"/>
+                             </div>
+                          </div>
+                       </div>
+                     </div>
+                 </div>
+                </div>
+            `,
+            controller: function detailsListController($http) {
+
+                //set inputs
+                this.Name=""
+                this.setName = function SetNameHandler(e) {
+                    this.Name = e.target.value;
+                }
+                this.setAmount = function SetAmountHandler(e) {
+                    this.Amount = e.target.value;
+                }
+                this.id_catalog = 0;
+                this.setCatalog = function SetCatalogHandler(e) {
+                    this.id_catalog = e.target.value;
+                }
+
+
+                $http.get("https://localhost:44342/api/CoverageInsurances")
+                    .then(res => this.dataCatalog = res.data)
+
+                this.deleteDetail = function deleteDetail(e) {
+                    let id = e.target.value;
+                    $http.delete("https://localhost:44342/api/DetailPolicies/" + id)
+
+                    location.reload(true);
+                }
+
+                this.createDetail = function createDetail() {
+                    try {
+
+                        if (this.Name == "") {
+                            throw new Error("No se ha ingresado el nombre. Ingreselo para continuar.")
+                        }
+                        if (this.id_catalog == 0) {
+                            throw new Error("Necesita seleccionar un Catalogo de Cobertura de Servicio. Ingreselo para continuar.")
+                        }
+                        if (this.Amount == undefined) {
+                            throw new Error("No se ha ingresado el monto asegurado. Ingreselo para continuar.")
+                        }
+
+                        $http.post("https://localhost:44342/api/DetailPolicies?name=" + this.Name
+                            + "&amount=" + this.Amount + "&id_catalog=" + this.id_catalog , {
+                            headers: {
+                                "Content- Type": "application/ json"
+                            }
+                        }).then(data => location.reload(true))
+
+                        
+                    }
+                    catch (e) {
+                        alert(e)
+                    }
+
+                }
+
+            }
+        });
+
+    //Catalog
+    angular.
+        module('myApp').
+        component('catalogList', {
+            template: `
+                <button id="btnVisible" ng-click="$ctrl.onClick($event)">{{$ctrl.bntName}}</button>
+                <div style={{$ctrl.styleText}}>
+                    <div id="items-details">
+                                <div>
+                                    <button ng-click="$ctrl.addDetailClick()">Nuevo Catalogo de Seguro</button>
+                                </div>
+                    <div style={{$ctrl.showAddDetails}}>
+                        <catalog-form></catalog-form>
+                    </div>
+                        <div id="item-title">
+                            <div><label>Nombre</label></div>
+                        </div>
+                        <div id="items-list">
+                            <div ng-repeat="detail in $ctrl.dataDetails">
+                                <div>
+                                    {{detail.name}}
+                                </div>
+                                <div>
+                                    <button value={{detail.id}} ng-click="$ctrl.deleteCatalog($event)">Borrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            controller: function detailsListController($http) {
+                //console.log(document.querySelector("#items-details").attributes.value.value);
+                this.key = true;
+                this.styleText = "display:none;";
+                this.bntName = "Mostrar";
+
+                this.showAddDetails = "display:none;";
+                this.showAddDetailsKey = false;
+                this.addDetailClick = function AddClick() {
+                    this.showAddDetailsKey = !this.showAddDetailsKey;
+                    if (this.showAddDetailsKey) {
+                        this.showAddDetails = "display:flex;";
+                    }
+                    else {
+                        this.showAddDetails = "display:none;";
+                    }
+                }
+
+                $http.get("https://localhost:44342/api/CoverageInsurances")
+                    .then(res => this.dataDetails = res.data)
+
+                this.onClick = function hideShow(evt) {
+                    this.key = !this.key;
+                    this.bntName = "Ocultar"
+                    this.styleText = "display:block;"
+                    if (this.key) {
+                        this.styleText = "display:none;"
+                        this.bntName = "Mostrar"
+                    }
+                }
+
+                this.deleteCatalog = function deleteCatalog(e) {
+                    console.log(e.target.value)
+                    let id = e.target.value;
+                    $http.delete("https://localhost:44342/api/CoverageInsurances/" + id)
+                    location.reload(true);
+                }
+
+                //this.createDetail = function createDetail(name, amount, id_catalog) {
+                //    $http.post("https://localhost:44342/api/CoverageInsurances?name=" + name + "&amount=" + amount + "&id_catalog"=id_catalog)
+                //    this.refresh_data()
+                //}
+
+            }
+        });
+
+    angular.
+        module('myApp').
+        component('catalogForm', {
+            template: `
+                        <div id="item-title">
+                            <div><label>Añadir nuevo Catalogo de Seguro</label></div>
+                        </div>
+                        <div >
+                            <div>
+                                <div>
+                                    <label>Nombre del Seguro</label>
+                                    <input type="text" ng-model="$ctrl.Name" required/>
+                                </div>
+                                <div>
+                                    <input type="submit" ng-click="$ctrl.createCatalog()" name={{catalog.id}} value="Guardar"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            controller: function detailsListController($http) {
+
+                //set inputs
+                this.Name = ""
+                this.setName = function SetNameHandler(e) {
+                    this.Name = e.target.value;
+                }
+                this.Amount = 0;
+                this.setAmount = function SetAmountHandler(e) {
+                    this.Amount = e.target.value;
+                }
+                this.id_catalog = 0;
+                this.setCatalog = function SetCatalogHandler(e) {
+                    this.id_catalog = e.target.value;
+                }
+
+                this.createCatalog = function createCatalog() {
+
+
+                    try {
+
+                        if (this.Name == "") {
+                            throw new Error("No se ha ingresado el nombre. Ingreselo para continuar.")
+                        }
+
+                        $http.post("https://localhost:44342/api/CoverageInsurances?id=1&name=" + this.Name, {
+                            headers: {
+                                "Content- Type": "application/ json"
+                            }
+                        })
+                        location.reload(true);
+                    }
+                    catch (e) {
+                        alert(e)
+                    }
+                }
+
+            }
+        });
+
+</script>

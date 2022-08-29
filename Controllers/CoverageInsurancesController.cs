@@ -8,48 +8,49 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using InsuranceCar_WebAPI.Models;
+using InsuranceCar_WebAPI.Schema;
+using InsuranceCar_WebApi.Services;
 
 namespace InsuranceCar_WebAPI.Controllers
 {
     public class CoverageInsurancesController : ApiController
     {
-        private InsuranceCarsDBEntities db = new InsuranceCarsDBEntities();
+        private GlobalContext db = new GlobalContext();
 
         // GET: api/CoverageInsurances
-        public IQueryable<CoverageInsurance> GetCoverageInsurances()
+        public IQueryable<CatalogList> GetCatalogLists()
         {
-            return db.CoverageInsurances;
+            return db.CatalogLists;
         }
 
         // GET: api/CoverageInsurances/5
-        [ResponseType(typeof(CoverageInsurance))]
-        public IHttpActionResult GetCoverageInsurance(int id)
+        [ResponseType(typeof(CatalogList))]
+        public IHttpActionResult GetCatalogList(int id)
         {
-            CoverageInsurance coverageInsurance = db.CoverageInsurances.Find(id);
-            if (coverageInsurance == null)
+            CatalogList catalogList = db.CatalogLists.Find(id);
+            if (catalogList == null)
             {
                 return NotFound();
             }
 
-            return Ok(coverageInsurance);
+            return Ok(catalogList);
         }
 
         // PUT: api/CoverageInsurances/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCoverageInsurance(int id, CoverageInsurance coverageInsurance)
+        public IHttpActionResult PutCatalogList(int id, CatalogList catalogList)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != coverageInsurance.id)
+            if (id != catalogList.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(coverageInsurance).State = EntityState.Modified;
+            db.Entry(catalogList).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +58,7 @@ namespace InsuranceCar_WebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CoverageInsuranceExists(id))
+                if (!CatalogListExists(id))
                 {
                     return NotFound();
                 }
@@ -71,34 +72,32 @@ namespace InsuranceCar_WebAPI.Controllers
         }
 
         // POST: api/CoverageInsurances
-        [ResponseType(typeof(CoverageInsurance))]
-        public IHttpActionResult PostCoverageInsurance(CoverageInsurance coverageInsurance)
+        [ResponseType(typeof(CatalogList))]
+        public IQueryable<CatalogList> PostCatalogList(int? id, string name)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            CatalogList catalogList = new CatalogList();
+            catalogList.name = name;
 
-            db.CoverageInsurances.Add(coverageInsurance);
+            db.CatalogLists.Add(catalogList);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = coverageInsurance.id }, coverageInsurance);
+            return GetCatalogLists();
         }
 
         // DELETE: api/CoverageInsurances/5
-        [ResponseType(typeof(CoverageInsurance))]
-        public IHttpActionResult DeleteCoverageInsurance(int id)
+        [ResponseType(typeof(CatalogList))]
+        public IHttpActionResult DeleteCatalogList(int id)
         {
-            CoverageInsurance coverageInsurance = db.CoverageInsurances.Find(id);
-            if (coverageInsurance == null)
+            CatalogList catalogList = db.CatalogLists.Find(id);
+            if (catalogList == null)
             {
                 return NotFound();
             }
 
-            db.CoverageInsurances.Remove(coverageInsurance);
+            db.CatalogLists.Remove(catalogList);
             db.SaveChanges();
 
-            return Ok(coverageInsurance);
+            return Ok(catalogList);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +109,9 @@ namespace InsuranceCar_WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CoverageInsuranceExists(int id)
+        private bool CatalogListExists(int id)
         {
-            return db.CoverageInsurances.Count(e => e.id == id) > 0;
+            return db.CatalogLists.Count(e => e.id == id) > 0;
         }
     }
 }
