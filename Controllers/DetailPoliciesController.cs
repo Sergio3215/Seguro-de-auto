@@ -41,8 +41,12 @@ namespace InsuranceCar_WebAPI.Controllers
         }
 
         // PUT: api/DetailPolicies/5
-        public IHttpActionResult PutPolicyList(int id, PolicyList policyList)
+        public IHttpActionResult PutPolicyList(int? id, string name, int amount, int id_category)
         {
+            PolicyList policyList = db.GetDetail().Where(dt => dt.id_catalog == id_category).FirstOrDefault();
+            policyList.name = name;
+            policyList.insured_amount = amount;
+            policyList.id_catalog = id_category;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -56,7 +60,7 @@ namespace InsuranceCar_WebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PolicyListExists(id))
+                if (!PolicyListExists((int)id))
                 {
                     return NotFound();
                 }
@@ -87,7 +91,7 @@ namespace InsuranceCar_WebAPI.Controllers
         // DELETE: api/DetailPolicies/5
         public IHttpActionResult DeleteDetailPolicy(int id)
         {
-            PolicyList detailPolicy = context.PolicyLists.Where(dt=>dt.id_catalog==id).FirstOrDefault();
+            PolicyList detailPolicy = context.PolicyLists.Where(dt => dt.id_catalog == id).FirstOrDefault();
             if (detailPolicy == null)
             {
                 return NotFound();

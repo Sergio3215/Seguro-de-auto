@@ -149,6 +149,9 @@
                 this.editKey = false;
                 this.clickEdit = async function clickEdit(e) {
 
+                    this.editKey = !this.editKey;
+
+                    if (this.editKey) {
                     let ftch = await fetch("https://localhost:44342/api/CoverageInsurances")
                     let data = await ftch.json();
 
@@ -156,10 +159,9 @@
                     let detailData = await detailFetch.json();
                     console.log(detailData)
 
-                    this.editKey = !this.editKey;
-
                     let optionSelect = ``;
 
+                    //Category
                     data.map(dt => {
                         if (detailData[0].name_catalog == name) {
                             optionSelect += `
@@ -173,22 +175,36 @@
                         }
                     })
 
-                    if (this.editKey) {
-                        document.querySelector("#editComponent").innerHTML = `
-                        <div>
+                        let componentDetail = ``;
+                    //data for edit
+                    detailData.map(dd => {
+                        componentDetail = `
                             <div>
-                                Editar detalle de poliza
-                            </div>
-                            <div>
-                                Editar detalle de poliza
+                                <label>Nombre</label>
+                                <input type="text" value=${dd.name} id="nameEdit"/>
                             </div>
                             <div>
                                <select >
                                      ${optionSelect}
                                  </select>
                             </div>
+                            <div>
+                                <label>Monto Asegurado</label>
+                                <input type="number" value=${parseInt(dd.insured_amount)} id="amountEdit"/>
+                            </div>
+                            <div>
+                               <button id="clickEdit" value=${dd.id_catalog} >Editar</button>
+                            </div>
+                        `;
+                    })
+
+                        document.querySelector("#editComponent").innerHTML = `
+                        <div>
+                            ${componentDetail}
                         </div>
                     `;
+
+                        document.querySelector("#clickEdit").addEventListener('click', (e)=>detailEdit(e) )
                     }
                     else {
 
@@ -198,6 +214,18 @@
 
             }
         });
+
+    const detailEdit = async (e) => {
+        let _id_category = e.target.value;
+        let _name = document.querySelector("#nameEdit").value;
+        let _amount = parseInt(document.querySelector("#amountEdit").value);
+        let ftc1 = await fetch("https://localhost:44342/api/DetailPolicies?id=" + parseInt(_id_category) + "&name=" + _name + "&amount=" + _amount + "&id_category=" + parseInt(_id_category), {
+            method: 'put'
+        })
+        location.reload(true)
+        let data = await ftc1.json();
+    }
+
 
     angular.
         module('myApp').
@@ -278,7 +306,7 @@
                             }
                         }).then(data => location.reload(true))
 
-                        
+
                     }
                     catch (e) {
                         alert(e)

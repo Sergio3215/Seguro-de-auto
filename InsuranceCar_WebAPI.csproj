@@ -165,11 +165,9 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Catalog Coverage\CatalogService.cs" />
     <Compile Include="Controllers\CoverageInsurancesController.cs" />
-    <Compile Include="Controllers\CoverageInsurancesController1.cs" />
     <Compile Include="Controllers\DetailPoliciesController.cs" />
     <Compile Include="Controllers\DetailPolicy\DetailPolicyService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PolicyListsAPIController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
